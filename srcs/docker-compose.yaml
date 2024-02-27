@@ -1,0 +1,38 @@
+version: '3.8'
+
+networks:
+  inception:
+services:
+  nginx:
+    container_name: nginx
+    build: requirements/nginx
+    volumes:
+      - "wp:/var/www/html"
+    ports:
+      - "80:80"
+    networks:
+      - inception
+  mariadb:
+    container_name: mariadb
+    build: requirements/mariadb
+    expose:
+      - "3306"
+    networks:
+      - inception
+  wordpress:
+    container_name: wordpress
+    build: requirements/wordpress
+    volumes:
+      - "wp:/var/www/html"
+    expose:
+      - "9000"
+    networks:
+      - inception
+volumes:
+  wp:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/jinho/inception/wp
+
