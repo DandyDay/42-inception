@@ -10,6 +10,9 @@ services:
       - "wp:/var/www/html"
     ports:
       - "80:80"
+    env_file:
+      - .env
+    restart: always
     networks:
       - inception
   mariadb:
@@ -17,6 +20,9 @@ services:
     build: requirements/mariadb
     expose:
       - "3306"
+    env_file:
+      - .env
+    restart: always
     networks:
       - inception
   wordpress:
@@ -26,13 +32,25 @@ services:
       - "wp:/var/www/html"
     expose:
       - "9000"
+    env_file:
+      - .env
+    restart: always
     networks:
       - inception
 volumes:
   wp:
+    name: volume_wp
     driver: local
     driver_opts:
       type: none
       o: bind
       device: /Users/jinho/inception/wp
+  db:
+    name: volume_db
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /Users/jinho/inception/db
+
 
