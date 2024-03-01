@@ -8,6 +8,9 @@ down:
 
 clean:
 	make down
+	# docker image rm -f mariadb
+	# docker image rm -f nginx
+	# docker image rm -f wordpress
 	docker volume rm -f volume_wp
 	docker volume rm -f volume_db
 
