@@ -1,6 +1,8 @@
 all: up
 
 up:
+	mkdir -p /Users/jinhchoi/data/db
+	mkdir -p /Users/jinhchoi/data/wp
 	docker compose --file ./srcs/docker-compose.yaml up --build -d
 
 down:
@@ -8,11 +10,15 @@ down:
 
 clean:
 	make down
-	# docker image rm -f mariadb
-	# docker image rm -f nginx
-	# docker image rm -f wordpress
+	docker image rm -f mariadb
+	docker image rm -f nginx
+	docker image rm -f wordpress
 	docker volume rm -f volume_wp
 	docker volume rm -f volume_db
+	rm -rf /Users/jinhchoi/data/db
+	rm -rf /Users/jinhchoi/data/wp
+	mkdir -p /Users/jinhchoi/data/db
+	mkdir -p /Users/jinhchoi/data/wp
 
 re:
 	make clean

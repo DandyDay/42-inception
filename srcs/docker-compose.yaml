@@ -3,23 +3,12 @@ version: '3.8'
 networks:
   inception:
 services:
-  nginx:
-    image: nginx
-    container_name: nginx
-    build: requirements/nginx
-    volumes:
-      - "wp:/var/www/html"
-    ports:
-      - "80:80"
-    env_file:
-      - .env
-    restart: always
-    networks:
-      - inception
   mariadb:
     image: mariadb
     container_name: mariadb
     build: requirements/mariadb
+    # volumes:
+    #   - "volume_db:/var/lib/mysql"
     expose:
       - "3306"
     env_file:
@@ -32,7 +21,7 @@ services:
     container_name: wordpress
     build: requirements/wordpress
     volumes:
-      - "wp:/var/www/html"
+      - "volume_wp:/var/www/html"
     expose:
       - "9000"
     env_file:
@@ -40,20 +29,35 @@ services:
     restart: always
     networks:
       - inception
+    depends_on:
+      - mariadb
+  nginx:
+    image: nginx
+    container_name: nginx
+    build: requirements/nginx
+    volumes:
+      - "volume_wp:/var/www/html"
+    ports:
+      - "443:443"
+    env_file:
+      - .env
+    restart: always
+    networks:
+      - inception
+    depends_on:
+      - wordpress
 volumes:
-  wp:
+  volume_wp:
     name: volume_wp
-    driver: local
     driver_opts:
       type: none
       o: bind
-      device: /Users/jinhchoi/inception/wp
-  db:
+      device: /Users/jinhchoi/data/wp/
+  volume_db:
     name: volume_db
-    driver: local
     driver_opts:
       type: none
       o: bind
-      device: /Users/jinhchoi/inception/db
+      device: /Users/jinhchoi/data/db/
 
 
