@@ -1,6 +1,6 @@
 FROM debian:bullseye
 
-COPY docker-entrypoint.sh /tmp/docker-entrypoint.sh
+COPY tools/docker-entrypoint.sh /tmp/docker-entrypoint.sh
 
 RUN apt-get update -y && \
 	apt-get upgrade -y && \
@@ -8,7 +8,7 @@ RUN apt-get update -y && \
 	service mariadb start && \
 	chmod 755 /tmp/docker-entrypoint.sh
 
-COPY 50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
+COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
 ENTRYPOINT [ "/bin/bash", "/tmp/docker-entrypoint.sh" ]
 

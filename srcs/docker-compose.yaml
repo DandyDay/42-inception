@@ -7,8 +7,8 @@ services:
     image: mariadb
     container_name: mariadb
     build: requirements/mariadb
-    # volumes:
-    #   - "volume_db:/var/lib/mysql"
+    volumes:
+      - "volume_db:/var/lib/mysql"
     expose:
       - "3306"
     env_file:
@@ -52,12 +52,12 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /Users/jinhchoi/data/wp/
+      device: /Users/jinho/data/wp/
   volume_db:
     name: volume_db
     driver_opts:
       type: none
       o: bind
-      device: /Users/jinhchoi/data/db/
+      device: /Users/jinho/data/db/
 
 
