@@ -10,15 +10,13 @@ down:
 
 clean:
 	@make down
-	@docker image rm -f mariadb
-	@docker image rm -f nginx
-	@docker image rm -f wordpress
+	@docker image rm -f mariadb:jinhchoi
+	@docker image rm -f nginx:jinhchoi
+	@docker image rm -f wordpress:jinhchoi
 	@docker volume rm -f volume_wp
 	@docker volume rm -f volume_db
 	@rm -rf /home/jinhchoi/data/db
 	@rm -rf /home/jinhchoi/data/wp
-	@mkdir -p /home/jinhchoi/data/db
-	@mkdir -p /home/jinhchoi/data/wp
 
 re:
 	make clean
